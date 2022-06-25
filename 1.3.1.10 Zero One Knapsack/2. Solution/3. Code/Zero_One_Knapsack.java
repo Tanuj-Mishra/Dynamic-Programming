@@ -14,51 +14,50 @@ class Main {
         return arr;
     }
 
-    public static int knapsack(int[] item, int[] weight, int capacity) {
+    public static int knapsack(int[] balls, int[] runs, int target) {
 
-        // matrix to which elements must be used
-        int n = item.length;
-        int[][] mtrx = new int[n + 1][capacity + 1];
+        int[][] dp = new int[runs.length + 1][target + 1]; // dp-row = player, dp-col = balls
 
-        // filling this matrix
-        // basically, row signifies the elements considered, i.e for row = 4 ->
-        // {0,1,2,3,4} are now taken under consideration
-        for (int row = 1; row <= n; row++) {
-            for (int presentCapacity = 1; presentCapacity <= capacity; presentCapacity++) {
+        for (int player = 0; player < dp.length; player++) {
+            for (int ballsAvailable = 0; ballsAvailable < dp[0].length; ballsAvailable++) {
 
-                int wt = weight[row - 1]; // weight of present element
-                int val = item[row - 1]; // number of elements
-                int prvs = mtrx[row - 1][presentCapacity]; // preivous item
-
-                if (wt > presentCapacity) {
-                    // in this case element can't be included
-                    mtrx[row][presentCapacity] = prvs;
+                if (player == 0 && ballsAvailable == 0) {
+                    dp[player][ballsAvailable] = 0;
+                } else if (player == 0) {
+                    dp[player][ballsAvailable] = 0;
+                } else if (ballsAvailable == 0) {
+                    dp[player][ballsAvailable] = 0;
                 } else {
-                    int excluding = prvs;
-                    int including = val + mtrx[row - 1][presentCapacity - wt];
-
-                    mtrx[row][presentCapacity] = Math.max(excluding, including);
+                    int minBallRequired = balls[player - 1];
+                    if (minBallRequired > ballsAvailable) { // he can't play
+                        dp[player][ballsAvailable] = dp[player - 1][ballsAvailable];
+                    } else { // he "can" play
+                        int runsIfNotPlayed = dp[player - 1][ballsAvailable];
+                        int runsIfPlayed = runs[player-1] + dp[player - 1][ballsAvailable - minBallRequired];
+                        dp[player][ballsAvailable] = Math.max(runsIfNotPlayed, runsIfPlayed);
+                    }
                 }
+
             }
         }
 
-        return mtrx[n][capacity];
 
+        return dp[dp.length-1][dp[0].length-1];
     }
 
     public static void main(String[] Args) {
 
         int n = scn.nextInt();
-        int[] item = arrayInput(n); // item is # of elements
-        int[] weight = arrayInput(n);
-        int capacity = scn.nextInt();
+        int[] runs = arrayInput(n);
+        int[] balls = arrayInput(n); // balls is # of elements
+        int target = scn.nextInt();
 
         // finding 01 Knapsack
-        int knap = knapsack(item, weight, capacity);
+        int knap = knapsack(balls, runs, target);
         System.out.println(knap);
     }
 
 }
 
-// item-weight = x-y
-// y weight wale, x elements h
+// balls-runs = x-y
+// y runs wale, x elements h

@@ -59,5 +59,3 @@ class Main {
 
 }
 
-// balls-runs = x-y
-// y runs wale, x elements h

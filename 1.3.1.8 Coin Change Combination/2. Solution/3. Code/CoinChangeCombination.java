@@ -20,9 +20,11 @@ class Main {
         int[] dp = new int[size];
         dp[0] = 1;
 
-        for (int i = 0; i < coins.length; i++) {
-            for (int j = coins[i]; j < size; j++) {
-                dp[j] += dp[j - coins[i]];
+        for (int coin : coins) {
+            for (int amount = 0; amount < dp.length; amount++) {
+                if (coin <= amount) {
+                    dp[amount] += dp[amount - coins[i]];
+                }
             }
         }
 

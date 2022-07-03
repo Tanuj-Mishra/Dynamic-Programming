@@ -24,7 +24,7 @@ class Main {
                 buy = sell = prices[i];
             }
         }
-        overallProfit += sell - buy;               
+        overallProfit += sell - buy;            // to update last transaction        
 
         System.out.println(overallProfit);
         

@@ -1,3 +1,5 @@
+// O(N) && O(N)
+
 import java.io.*;
 import java.util.*;
 

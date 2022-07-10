@@ -27,7 +27,7 @@ class Main {
         int[][] solutionBank = new int[row][col];
 
         for (int j = col - 1; j >= 0; j--) {
-            for (int i = row - 1; i >= 0; i--) {
+            for (int i = row - 1; i >= 0; i--) {        // we can also traverse from i = 0 to i < row;
 
                 if (j == col - 1) {
                     solutionBank[i][j] = goldmine[i][j];

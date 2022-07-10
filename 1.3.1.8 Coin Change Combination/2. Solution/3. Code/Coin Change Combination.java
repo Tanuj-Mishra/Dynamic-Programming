@@ -23,7 +23,7 @@ class Main {
         for (int coin : coins) {
             for (int amount = 0; amount < dp.length; amount++) {
                 if (coin <= amount) {
-                    dp[amount] += dp[amount - coins[i]];
+                    dp[amount] += dp[amount - coin];
                 }
             }
         }
@@ -31,3 +31,4 @@ class Main {
         System.out.println(dp[size - 1]);
     }
 }
+
